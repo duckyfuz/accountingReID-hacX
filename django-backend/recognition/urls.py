@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views
 
+
 urlpatterns = [
-    path('recognition/', views.recog, name='recog'),
+    path('recog/', views.recog, name='recog'),
+    path('predict/', views.MLPrediction.as_view(), name='MLPrediction'),
 ]
