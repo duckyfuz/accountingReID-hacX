@@ -1,135 +1,32 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
-  const [emoji, setEmoji] = useState("😀");
+  const [image1, setImage1] = useState(null);
+  const [image2, setImage2] = useState(null);
 
-  const emojis = [
-    "😀",
-    "😃",
-    "😄",
-    "😁",
-    "😆",
-    "😅",
-    "🤣",
-    "😂",
-    "🙂",
-    "🙃",
-    "😉",
-    "😊",
-    "😇",
-    "🥰",
-    "😍",
-    "🤩",
-    "😘",
-    "😗",
-    "😚",
-    "😙",
-    "😋",
-    "😛",
-    "😝",
-    "😜",
-    "🤪",
-    "🤨",
-    "🧐",
-    "🤓",
-    "😎",
-    "🤩",
-    "🥳",
-    "😏",
-    "😒",
-    "😞",
-    "😔",
-    "😟",
-    "😕",
-    "🙁",
-    "☹️",
-    "😣",
-    "😖",
-    "😫",
-    "😩",
-    "🥺",
-    "😢",
-    "😭",
-    "😤",
-    "😠",
-    "😡",
-    "🤬",
-    "🤯",
-    "😳",
-    "🥵",
-    "🥶",
-    "😱",
-    "😨",
-    "😰",
-    "😥",
-    "😓",
-    "🤗",
-    "🤔",
-    "🤭",
-    "🤫",
-    "🤥",
-    "😶",
-    "😐",
-    "😑",
-    "😬",
-    "🙄",
-    "😯",
-    "😦",
-    "😧",
-    "😮",
-    "😲",
-    "😴",
-    "🤤",
-    "😪",
-    "😵",
-    "🤐",
-    "🥴",
-    "🤢",
-    "🤮",
-    "🤕",
-    "🥳",
-    "😷",
-    "🤒",
-    "🤕",
-    "🤑",
-    "🤠",
-    "😈",
-    "👿",
-    "👹",
-    "👺",
-    "💀",
-    "👻",
-    "👽",
-    "🤖",
-    "💩",
-    "😺",
-    "😸",
-    "😹",
-    "😻",
-    "😼",
-    "😽",
-    "🙀",
-    "😿",
-    "😾",
-  ];
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const getRandomEmoji = () => {
-    let randomIndex = Math.floor(Math.random() * emojis.length);
-    setEmoji(emojis[randomIndex]);
+    const formData = new FormData();
+    formData.append("image1", image1);
+    formData.append("image2", image2);
+
+    const response = await fetch("http://localhost:8000/predict/", {
+      method: "POST",
+      body: formData,
+    });
+
+    console.log(response.json());
   };
 
   return (
-    <>
-      <div className="card">
-        <button style={{ width: 100, height: 100 }} onClick={getRandomEmoji}>
-          my name is kenneth and i am angery {emoji}
-        </button>
-      </div>
-    </>
+    <form onSubmit={handleSubmit}>
+      <input type="file" onChange={(e) => setImage1(e.target.files[0])} />
+
+      <input type="file" onChange={(e) => setImage2(e.target.files[0])} />
+
+      <button type="submit">Compare Images</button>
+    </form>
   );
 }
 
