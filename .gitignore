@@ -1,5 +1,6 @@
 # Virtual environment
 env/ 
+test-ipynb/
 
 # Database
 db.sqlite3
